@@ -173,7 +173,7 @@ const KNOWN_TOOLS = new Set([...READ_TOOLS, ...FEED_TOOLS, ...CONNECT_TOOLS, ...
 const NOT_TOOLS = new Set(["confirm_token", "fresh_hours", "daily_cap", "as_of", "billing_required", "billing_note", "pay_here",
   "read_orders", "read_products", "read_reports", "ads_read", "read_insights", "available_numbers",
   // fields of a number's definition, a field of a tool's answer, a change name and a period (sorted-add-any-number)
-  "will_read", "group_by", "next_cursor", "channel_field", "exclude_teams", "category_aliases", "discount_lines", "channels_without_target", "store_areas", "store_channel", "category_groups", "adjustment_categories", "month_rule", "date_fields", "till_lines", "variant_suffixes",
+  "will_read", "group_by", "next_cursor", "no_change", "year_overrides", "product_name", "currency", "strip_leading_code", "strip_brackets", "drop_tokens", "created_date", "create_date", "order_date", "till_date", "channel_field", "exclude_teams", "category_aliases", "discount_lines", "channels_without_target", "store_areas", "store_channel", "category_groups", "adjustment_categories", "month_rule", "date_fields", "till_lines", "variant_suffixes",
   "sales_channel", "sales_store", "sales_store_category", "sales_channel_category", "sales_channel_product", "sales_excluded", "shop_funnel", "shop_funnel_source", "ads_meta", "target_total", "target_channel", "target_store", "target_channel_category", "date_field", "currency_field", "this_month", "all_time", "add_number", "add_to_page", "tables_and_charts"]);
 // ======================================================================================================
 
