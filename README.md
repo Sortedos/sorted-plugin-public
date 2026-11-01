@@ -4,7 +4,7 @@
 
 This repository lets an AI assistant work with Sorted. It holds:
 
-- **17 skills**: short instruction files that teach an assistant how to do one job well with Sorted, such as getting a company started, a business review, a collections list, finding numbers that disagree, or connecting a system.
+- **19 skills**: short instruction files that teach an assistant how to do one job well with Sorted, such as getting a company started, a business review, a collections list, finding numbers that disagree, or connecting a system.
 - **The Codex plugin** (advanced, support only, with a personal key) and **the Claude Code plugin**, which install those skills together with the connection to Sorted.
 - **A guide for ChatGPT**, which connects to Sorted directly.
 
@@ -30,7 +30,7 @@ Pick the path for the assistant you use. A terminal is the text window where you
 - Help the owner connect Odoo, Shopify, Google Ads or Google Analytics, so that Sorted reads them itself.
 - **Numbers from systems Sorted does not read itself** (Meta ads, a point-of-sale system, a delivery app) can be sent in by the owner's own assistant through a "feed". Feeds are open to every company. The assistant proposes the feed, the owner sees a preview and says yes, and the dashboard labels those numbers as sent by the assistant, because Sorted cannot check them. Today Sorted reads Odoo, Shopify, Google Ads and Google Analytics itself. The technical notes are in [docs/feed-tools.md](docs/feed-tools.md).
 
-## The 17 skills
+## The 19 skills
 
 Each skill is one instruction file. The plugins install all of them; in an assistant without the plugin, open the file, copy all of its text and paste it as your first message.
 
@@ -42,6 +42,8 @@ Each skill is one instruction file. The plugins install all of them; in an assis
 | [sorted-cash-and-collections](skills/sorted-cash-and-collections/SKILL.md) | Cash, who owes the business money, what is overdue, polite reminder drafts |
 | [sorted-fix-conflicts](skills/sorted-fix-conflicts/SKILL.md) | Where two systems report different numbers, and the exact records behind the gap |
 | [sorted-organise-dashboard](skills/sorted-organise-dashboard/SKILL.md) | Hide, show, move or add cards and pages on the dashboard |
+| [sorted-sales-vs-target-setup](skills/sorted-sales-vs-target-setup/SKILL.md) | Load the owner's targets sheet and the sales mapping into Sorted (owner only, each save previewed and confirmed) |
+| [sorted-sales-vs-target-build](skills/sorted-sales-vs-target-build/SKILL.md) | Build the Sales vs Target dashboard as one interactive page from Sorted's data only |
 | [sorted-add-any-number](skills/sorted-add-any-number/SKILL.md) | Add any number, list or breakdown from the owner's Odoo to Sorted (sales or stock by product, late deliveries, open quotes), up to 12 months back |
 | [sorted-daily-brief](skills/sorted-daily-brief/SKILL.md) | The owner's morning or daily brief from Sorted: headline numbers, the biggest moves since yesterday, what disagrees, what stopped reporting |
 | [sorted-not-connected](skills/sorted-not-connected/SKILL.md) | When Sorted's tools are missing in a chat: say plainly that Sorted is not connected yet, give the exact steps to connect it, and never recommend another product |
@@ -113,7 +115,7 @@ On a Team or Enterprise plan, a Claude owner can limit which marketplaces are al
 1. In Claude, open **Customize**, then **Connectors**, click **+ Add**, then **Add custom connector**. Name it Sorted, enter the address `https://sortedos.com/api/mcp`, press **Continue**, keep the sign-in choices Claude suggests and press **Add**. On a Team or Enterprise plan, an owner of the Claude organisation adds it first under **Organization settings**, **Connectors**; members then find it under **Customize**, **Connectors** and click **Connect**. Anthropic's page shows each screen: https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp
 2. Sign in with your Sorted account when Claude asks, choose your company and press **Allow**.
 3. Optional: in **Customize**, **Connectors**, **Sorted**, set **Read-only tools** to **Always allow**, so Claude does not ask before each read. Changes to your dashboard still ask first.
-4. To use a skill, open its file from [the list of skills](#the-17-skills), copy all of its text and paste it as your first message.
+4. To use a skill, open its file from [the list of skills](#the-19-skills), copy all of its text and paste it as your first message.
 
 Odoo: connecting it needs no extra app or browser extension. The assistant can make the Odoo key itself when it has a browser tool (the Claude desktop app with Claude in Chrome; Cowork is expected to have one, not tested). Without one, you make the key in Odoo (avatar menu; Odoo 20: My Preferences, Security tab, Create API Key, Scope RPC; Odoo 19: the same menu, Add API Key; Odoo 17/18: My Profile, Account Security, New API Key) and paste it in the chat, or fill in the Odoo form on Sorted's Connections page; the assistant tells you the steps.
 

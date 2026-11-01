@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.3.20
+
+1.3.20: two skills for the Sales vs Target dashboard (19 skills), 1 November 2026. No connection change. These skills name tools that Sorted adds with the Sales vs Target release (`get_dataset`, `load_reference_table`, `read_reference_table`, `preview_sales_mapping`, `set_sales_mapping`, `get_sales_mapping`); until the service has them the assistant tells the owner the setting is not switched on yet.
+
+- **`sorted-sales-vs-target-setup`** (owner only): reads the owner's targets sheet and the company's own Odoo names, saves the mapping (preview, "Shall I apply this?", then confirm) and the four targets tables (preview, yes, confirm), then checks that the saved totals match the sheet and ends with counts only.
+- **`sorted-sales-vs-target-build`**: builds the dashboard as one interactive page from Sorted's data only (no exported file, no other connector, no key asked for): seven tabs, the controls, the formulas for the as-of month's share, targets, last year and the three projections, a phone-width check, and "-" for any number that is not there.
+- The skill lint knows the six new tools and the dataset, table and setting names, and requires both skills in the list.
+
 ## 1.3.19
 
 1.3.19: the repository is now Sortedos/sorted-plugin-public (renamed on 29 October 2026; it was Sortedos/sorted-plugin). The old address still works: GitHub redirects it, and on 29 October 2026 `claude plugin marketplace add Sortedos/sorted-plugin` and `codex plugin marketplace add Sortedos/sorted-plugin` both still worked. New installs should use the new name. No new skills (17 skills), no change to any skill, no connection change.
