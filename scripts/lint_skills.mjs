@@ -166,12 +166,15 @@ const READ_TOOLS = ["get_overview", "get_section", "list_conflicts", "get_confli
   "preview_number", "enable_number", "disable_number", "preview_cash_journals", "set_cash_journals", "clear_cash_journals", "live_read", "preview_refresh_rate", "set_refresh_rate"];
 const FEED_TOOLS = ["define_feed", "feed_numbers", "list_feeds", "end_feed"];
 const CONNECT_TOOLS = ["connect_odoo"]; // saves an Odoo connection after the owner's yes (Sorted still only reads from that Odoo); live since 11 October 2026
-const KNOWN_TOOLS = new Set([...READ_TOOLS, ...FEED_TOOLS, ...CONNECT_TOOLS]);
+// Sales vs Target (card #456, 1 November 2026): reading datasets, the owner's targets as versioned reference tables, and the sales mapping setting (owner only, preview then confirm).
+const SALES_TOOLS = ["get_dataset", "load_reference_table", "read_reference_table", "preview_sales_mapping", "set_sales_mapping", "get_sales_mapping"];
+const KNOWN_TOOLS = new Set([...READ_TOOLS, ...FEED_TOOLS, ...CONNECT_TOOLS, ...SALES_TOOLS]);
 // Words in backticks that look like tool names but are fields, units or skill names, not tools.
 const NOT_TOOLS = new Set(["confirm_token", "fresh_hours", "daily_cap", "as_of", "billing_required", "billing_note", "pay_here",
   "read_orders", "read_products", "read_reports", "ads_read", "read_insights", "available_numbers",
   // fields of a number's definition, a field of a tool's answer, a change name and a period (sorted-add-any-number)
-  "will_read", "group_by", "date_field", "currency_field", "this_month", "all_time", "add_number", "add_to_page", "tables_and_charts"]);
+  "will_read", "group_by", "next_cursor", "no_change", "year_overrides", "product_name", "currency", "strip_leading_code", "strip_brackets", "drop_tokens", "created_date", "create_date", "order_date", "till_date", "channel_field", "exclude_teams", "category_aliases", "discount_lines", "channels_without_target", "store_areas", "store_channel", "category_groups", "adjustment_categories", "month_rule", "date_fields", "till_lines", "variant_suffixes",
+  "sales_channel", "sales_store", "sales_store_category", "sales_channel_category", "sales_channel_product", "sales_excluded", "shop_funnel", "shop_funnel_source", "ads_meta", "target_total", "target_channel", "target_store", "target_channel_category", "date_field", "currency_field", "this_month", "all_time", "add_number", "add_to_page", "tables_and_charts"]);
 // ======================================================================================================
 
 const SECRET_WORD = new RegExp(`\\b${SECRET_REF}\\b`, "i");
@@ -415,7 +418,7 @@ console.log(`ok - examples: the lint catches ${caught} of ${BAD.length} bad exam
 const EXPECTED = ["sorted-onboard", "sorted-about", "sorted-business-review", "sorted-cash-and-collections", "sorted-connect-systems", "sorted-fix-conflicts",
   "sorted-add-any-number", "sorted-organise-dashboard", "sorted-subscription", "sorted-connect-odoo", "sorted-connect-shopify", "sorted-connect-google-ads",
   "sorted-connect-google-analytics", "sorted-connect-meta-ads", "sorted-connect-any-system",
-  "sorted-not-connected", "sorted-daily-brief"];
+  "sorted-not-connected", "sorted-daily-brief", "sorted-sales-vs-target-setup", "sorted-sales-vs-target-build"];
 const FEED_SKILLS = new Set(["sorted-connect-odoo", "sorted-connect-shopify", "sorted-connect-google-ads", "sorted-connect-google-analytics",
   "sorted-connect-meta-ads", "sorted-connect-any-system"]);
 // What every feed skill must say (matrix item 4): what to ask the owner, read-only access first, exact steps for a read-only
@@ -480,7 +483,7 @@ const DAILY_BRIEF_RULES = [
 const DAILY_BRIEF_PHRASES = [/morning brief/i, /daily brief/i, /what changed since yesterday/i];
 // Every skill that needs Sorted's tools starts by pointing to sorted-not-connected (the feed skills are at the word limit and are only reached after sorted-onboard).
 const NOT_CONNECTED_POINTER_SKILLS = new Set(["sorted-onboard", "sorted-connect-systems", "sorted-business-review", "sorted-cash-and-collections", "sorted-fix-conflicts",
-  "sorted-organise-dashboard", "sorted-subscription", "sorted-add-any-number", "sorted-daily-brief"]);
+  "sorted-organise-dashboard", "sorted-subscription", "sorted-add-any-number", "sorted-daily-brief", "sorted-sales-vs-target-setup", "sorted-sales-vs-target-build"]);
 
 // What the entry-point skill must keep (the discovery-first flow): the one first question, a look at what Sorted already has, one plan
 // with the three columns, and the plain statement that only Odoo, Shopify, Google Ads and Google Analytics 4 can be added today
