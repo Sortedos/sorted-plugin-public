@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.22
+
+1.3.22: `sorted-onboard` says again that the first read "usually" happens within the hour; 1.3.21 dropped the word to save space, which turned a hedge into a promise (Sorted's own guide check caught it). No other change, no new skills (19 skills).
+
 ## 1.3.21
 
 1.3.21: a new owner's dashboard is built by interview, not from the fixed menu. No new skills (19 skills), no connection change.
