@@ -17,7 +17,7 @@ None of Sorted's tools (`list_connections`, `get_overview`) among yours? Then So
 
 Ask: "Which software does your company run on? If you run more than one company, list each one's."
 
-Name the kinds so nothing is forgotten: accounting, sales or point of sale, online store, ads, website analytics, banks and payment apps, spreadsheets. Note which company each one belongs to. Ask nothing else yet.
+Name the kinds so nothing is forgotten: accounting, sales or point of sale, online store, ads, website analytics, banks and payment apps, spreadsheets. Note each one's company. Ask nothing else yet.
 
 Never ask the owner for a fact the system can show: its plan, version, database name, list of companies or address.
 
@@ -31,7 +31,7 @@ Today Sorted reads four systems itself: **Odoo, Shopify, Google Ads and Google A
 
 Everything else (spreadsheets, bank and payment apps, Foodics, Meta ads, any other system) cannot be added yet. Say so plainly: never promise it works today, never search for a workaround, never offer a connector someone else built. The next step is to ask the Sorted team to build it: offer once per conversation, in one sentence (usually a few days, depends on the system's access). Only if the owner says yes, fill in the Connections page's "My software isn't listed" form for them (software name, website if known, the numbers wanted, "Read data only") and press Request connector, which shows the request's progress. If you cannot reach the form, call `request_new_number` with kind "change" and his words.
 
-Show ONE plan as a table: system | what Sorted does | when the numbers arrive. Sorted reads each system every hour and checks the numbers; the first read usually happens within the hour, and the owner can start it sooner with the dashboard's Refresh now button, if it shows. For Google Analytics, Sorted first confirms each property by hand, usually within one working day. List what cannot be added yet under "Not yet". Ask one yes for the whole plan.
+Show ONE plan as a table: system | what Sorted does | when the numbers arrive. Sorted reads each system every hour and checks the numbers; the first read happens within the hour, and the owner can start it sooner with the dashboard's Refresh now button, if it shows. For Google Analytics, Sorted first confirms each property by hand, usually within one working day. List what cannot be added yet under "Not yet". Ask one yes for the whole plan.
 
 ## 4. Connect them, one by one
 
@@ -46,11 +46,11 @@ Show ONE plan as a table: system | what Sorted does | when the numbers arrive. S
 
 ## 5. Choose the numbers
 
-What only the owner knows: which numbers matter to them and how often they want them. Ask once how often Sorted should refresh: every 1, 3, 6, 12 or 24 hours (hourly is the default); use `preview_refresh_rate`, then `set_refresh_rate` only after a yes. Then call `get_overview` and report only the numbers it returns, with their units and snapshot time. To show or hide cards later, see `sorted-organise-dashboard`; for a number Sorted lacks, `sorted-add-any-number`.
+What only the owner knows: which numbers matter to them and how often they want them. Ask once how often Sorted should refresh: every 1, 3, 6, 12 or 24 hours (hourly by default); use `preview_refresh_rate`, then `set_refresh_rate` only after a yes. Then call `get_overview` and report only the numbers it returns, with their units and snapshot time. Then build their own first page by interview (`sorted-organise-dashboard`, "First page"), never the fixed menu; for a number Sorted lacks, `sorted-add-any-number`.
 
 ## 6. Close with a list
 
-Tell the owner, in one short list, what you created and where (user, key, app, permission) so they can remove it later, which numbers Sorted checks, and each key's expiry date. Disconnecting a system in Sorted deletes only Sorted's copy of the access. After the first connection, tell them once that the assistant's settings can always allow Sorted's read-only tools, so it stops asking before every read.
+Tell the owner, in one list, what you created and where (user, key, app, permission) so they can remove it later, which numbers Sorted checks, and each key's expiry date. Disconnecting a system in Sorted deletes only Sorted's copy of the access. After connecting, tell them that the assistant's settings can always allow Sorted's read-only tools, so it stops asking before every read.
 
 ## Never
 
