@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.21
+
+1.3.21: a new owner's dashboard is built by interview, not from the fixed menu. No new skills (19 skills), no connection change.
+
+- **`sorted-organise-dashboard`** gets a "First page" section: ask once which businesses or parts of the company the owner runs and what they want to see first; propose one page per business plus a "Today" home page from numbers that exist; preview and apply the pages, grid and home page on a yes; hide the menu areas the owner does not use; offer the layout as the team default (owner only).
+- **`sorted-onboard`** step 5 now ends by building the owner's first page that way, never presenting the six built-in menu areas as how the business is divided.
+
 ## 1.3.20
 
 1.3.20: two skills for the Sales vs Target dashboard (19 skills), 1 November 2026. The setup skill covers every mapping setting of the dataset contract and says how each is proposed from the owner's own Odoo; the build skill draws a reduced page for a member who cannot read the owner's settings. No connection change. These skills name tools that Sorted adds with the Sales vs Target release (`get_dataset`, `load_reference_table`, `read_reference_table`, `preview_sales_mapping`, `set_sales_mapping`, `get_sales_mapping`); until the service has them the assistant tells the owner the setting is not switched on yet.
