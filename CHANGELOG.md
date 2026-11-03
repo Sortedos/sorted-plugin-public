@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.23
+
+1.3.23: `sorted-organise-dashboard` says "the person's own structure" instead of "the owner's own structure". The dashboard belongs to the signed-in person, owner or member; Sorted's own wording check (`check_personal_layouts_mcp`) caught the slip in the 1.3.21 "First page" section. No other change, no new skills (19 skills).
+
 ## 1.3.22
 
 1.3.22: `sorted-onboard` says again that the first read "usually" happens within the hour; 1.3.21 dropped the word to save space, which turned a hedge into a promise (Sorted's own guide check caught it). No other change, no new skills (19 skills).

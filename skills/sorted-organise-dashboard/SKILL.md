@@ -18,7 +18,7 @@ Use the connected Sorted MCP tools; tool prefixes vary by host. Read the server'
 
 ## First page (a new owner, or "build my dashboard from scratch")
 
-The fixed menu areas (Overview, Money, Product, Delivery, Growth & costs, Conflicts) come with Sorted; never present them as how the owner's business is divided. Build the owner's own structure by interview:
+The fixed menu areas (Overview, Money, Product, Delivery, Growth & costs, Conflicts) come with Sorted; never present them as how the owner's business is divided. Build the person's own structure by interview:
 
 1. Ask once, in plain words: "Which businesses or parts of your company do you run, and what do you want to see first every morning?" Wait for the answer.
 2. From `get_overview` and `get_dashboard_layout`, propose one page per business or purpose plus a "Today" page of the few numbers that need the owner every day. Use only numbers that exist; name any gap instead of inventing a number (step 4).
