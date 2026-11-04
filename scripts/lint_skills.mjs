@@ -134,7 +134,10 @@ const VENDORS = /\b(?:claude|chatgpt|gpt(?:-\d)?|openai|anthropic|codex|gemini|c
 // The ONE approved exception (11 October 2026): when an assistant has no browser or computer tool, the owner must be told where to continue, and only
 // the vendors' own names for those modes say it (ChatGPT's Work mode has its own cloud computer; Claude in Chrome and Cowork are Claude's). The
 // exact parenthesis is allowed, nothing around it: any other vendor name, or this one worded differently, is still caught.
-const MODE_NAMES = "(ChatGPT: Work mode; Claude: Claude in Chrome or Cowork)";
+const MODE_NAMES = "(ChatGPT: Work mode; Claude: Cowork)";
+// The THIRD approved exception (3 November 2026, Hassan; issue Sortedos/sorted-code#577): the assistant must use ITS OWN browser and never the owner's Chrome, and only the vendors' own names
+// for that browser say it. This one bullet of sorted-onboard is allowed word for word (check below that it is there); any other vendor name, or this line worded differently, is still caught.
+const OWN_BROWSER_LINE = "**Your own browser, never the owner's Chrome.** Claude: the Claude app's browser (Cowork); ChatGPT: Work mode. Never use or list the owner's Chrome browsers or ask which one. Not available here (Claude on the web)? Say so in one line, offer the Claude desktop app, then use the Connections link.";
 // The SECOND approved exception (19 October 2026, live test, issue 231): when Sorted's tools are not available the owner must be told exactly which buttons connect Sorted, and the
 // buttons have each assistant's own name. These lines live in sorted-not-connected ONLY and are allowed word for word: any other vendor name, or one of these lines worded differently, is still caught.
 const CONNECT_STEPS = [
@@ -234,7 +237,7 @@ export function lint(text) {
     problems.push(`address not on the fixed list (written without https://): ${host}`);
   }
   if (REASONING.test(text)) problems.push(`asks the assistant to show its reasoning: "${(text.match(REASONING) || [""])[0]}"`);
-  let noModeNames = text.split(MODE_NAMES).join(" ");
+  let noModeNames = text.split(OWN_BROWSER_LINE).join(" ").split(MODE_NAMES).join(" ");
   for (const line of CONNECT_STEPS) noModeNames = noModeNames.split(line).join(" ");
   if (VENDORS.test(noModeNames)) problems.push(`names an assistant vendor: "${(noModeNames.match(VENDORS) || [""])[0]}"`);
   if (PLACEHOLDER.test(text)) problems.push(`contains a placeholder: "${(text.match(PLACEHOLDER) || [""])[0]}"`);
@@ -363,7 +366,7 @@ const BAD = [
 ];
 const GOOD = [
   "If `define_feed` and `feed_numbers` are not among your Sorted tools, ask the owner once to press Refresh tools in Sorted's plugin settings (if shown) and start a new chat.", // the Refresh tools request, vendor free (13 Oct 2026)
-  "No browser or computer tool? Tell them to continue in a mode or app that has one (ChatGPT: Work mode; Claude: Claude in Chrome or Cowork) with a ready message.", // the one place the skills name the modes
+  "No browser or computer tool? Tell them to continue in a mode or app that has one (ChatGPT: Work mode; Claude: Cowork) with a ready message.", // the one place the skills name the modes
   ...CONNECT_STEPS, // the approved connection steps in sorted-not-connected, word for word (19 Oct 2026, issue 231)
   "Never ask for, receive, read back, repeat, store or pass on any key, password or token.",
   "Never ask for the key, repeat it, or store it.",
@@ -489,6 +492,8 @@ const NOT_CONNECTED_POINTER_SKILLS = new Set(["sorted-onboard", "sorted-connect-
 // with the three columns, and the plain statement that only Odoo, Shopify, Google Ads and Google Analytics 4 can be added today
 // (11 October 2026: feeds are off, so the seven routes are gone from the plan).
 const ONBOARD_RULES = [
+  // 3 November 2026 (Hassan, #577): the assistant's own browser, never the owner's Chrome, and never the question "which Chrome".
+  ["says to use its own browser, never the owner's Chrome, and never to ask which one", { test: (t) => t.split(/\r?\n/).includes("- " + OWN_BROWSER_LINE) }],
   // 29 October 2026: browser first in onboarding too.
   ["say browser first: the assistant makes the key and never tells the owner to get one", /\*\*Browser first; you make the key\.\*\*[^\n]*Never tell the owner to get, find or make an API key\./],
   ["asks the one first question", /Which software does your company run on\? If you run more than one company, list each one's\./],
@@ -512,10 +517,11 @@ const ONBOARD_RULES = [
 // browser where they are already signed in to Sorted (the assistant's own browser is the last resort and must first show the owner's email and company name), the
 // database name and login come from the signed-in Odoo page, never from a hosting dashboard, and same-named cost tags need no question.
 const SIGN_IN_RULES = [
-  ["gives the owner one link for their company to open where they are already signed in to Sorted", /already signed in to Sorted: https:\/\/sortedos\.com\/connections\?org=<company id>&provider=<google_ads\|ga4\|shopify>/],
+  ["gives one link for the owner's company, opened in the assistant's own browser where the owner signs in to Sorted", /the owner signs in to Sorted there\): https:\/\/sortedos\.com\/connections\?org=<company id>&provider=<google_ads\|ga4\|shopify>/],
   ["stops at Google's unverified app screen and lets the owner continue only on the owner's yes", /"unverified app" screen: stop and tell the owner what it says; only on the owner's yes do you press Advanced/],
   // 29 October 2026: browser first. The assistant opens the company's link itself, in the owner's own browser, and checks the page shows the owner's email and the company's name; only then, or with no browser tool, does the owner open the link.
-  ["opens the company's link itself in the owner's own browser, checks the owner's email and company name, and otherwise gives the owner the link", /Open this link yourself, in the owner's own browser[\s\S]*must show the owner's email and the company's name; if not, give the owner the link to open/],
+  // 3 November 2026 (Hassan, #577): the assistant's OWN browser, never the owner's Chrome; the owner still types the Sorted sign-in there.
+  ["opens the company's link itself in its own browser (never the owner's Chrome), checks the owner's email and company name, and otherwise gives the owner the link", /Open this link yourself, in your own browser \(never the owner's Chrome[\s\S]*must show the owner's email and the company's name; if not, give the owner the link to open/],
   ["reads the database name and login from the signed-in page's session info and never opens a hosting dashboard", /session info[\s\S]*"db" and "username"[\s\S]*Never open Odoo\.sh, GitHub or a hosting dashboard/],
   ["says same-named cost tags are all included and each line counts once", /tags that share a name are all included and each line counts once/],
   // 12 October 2026 (live test): Sorted's own Google sign-in for Analytics is switched off, so Analytics has no Continue with Google. The assistant does the guided setup itself
@@ -607,7 +613,7 @@ for (const d of dirs) {
     if (!desc || desc[1].trim().length < 40) problems.push("frontmatter has no real description (40 characters at least)");
   }
   const words = (text.match(/\S+/g) || []).length;
-  if (words > 1450) problems.push(`over 1,450 words: ${words}`);
+  if (words > 1500) problems.push(`over 1,500 words: ${words}`); // 1,450 until 3 Nov 2026: raised by Hassan's ruling for the own-browser rule (#577)
   problems.push(...lint(text));
   if (FEED_SKILLS.has(d)) {
     for (const tool of FEED_TOOLS) if (!text.includes(`\`${tool}\``)) problems.push(`does not name the tool ${tool}`);

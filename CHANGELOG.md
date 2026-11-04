@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.24
+
+1.3.24: `sorted-onboard` and `sorted-connect-systems` make Claude use its own browser (the Claude app's browser, Cowork) and never the owner's Chrome. Before, Claude on the web went to the owner's Chrome and asked which of four Chrome browsers to use. Now it never asks that; if its own browser is not available in the chat it says so, offers the Claude desktop app, and gives the Connections link. The owner still signs in to Sorted and to each system themselves. No new skills (19 skills). Lint (`scripts/lint_skills.mjs`): the word cap per skill goes from 1,450 to 1,500 (Hassan, 3 Nov 2026); the own-browser bullet is a third approved vendor-name exception, required word for word in `sorted-onboard`; the connection-link rules now require the own-browser wording. Ticket: https://github.com/Sortedos/sorted-code/issues/577
+
 ## 1.3.23
 
 1.3.23: `sorted-organise-dashboard` says "the person's own structure" instead of "the owner's own structure". The dashboard belongs to the signed-in person, owner or member; Sorted's own wording check (`check_personal_layouts_mcp`) caught the slip in the 1.3.21 "First page" section. No other change, no new skills (19 skills).
