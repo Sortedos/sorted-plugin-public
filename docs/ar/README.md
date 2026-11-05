@@ -6,7 +6,7 @@ FOR NATIVE REVIEW: this Arabic text was written by an assistant and has not been
 
 المشروع ده (مجموعة ملفات) بيخلي المساعد الذكي يشتغل مع Sorted. وفيه:
 
-- **19 skill**: ملفات تعليمات قصيرة، كل واحد بيعلّم المساعد يعمل شغلانة واحدة كويس مع Sorted، زي بداية الشغل مع الشركة، أو مراجعة أداء الشركة، أو قائمة التحصيل، أو الأرقام اللي مش متطابقة، أو توصيل نظام.
+- **20 skill**: ملفات تعليمات قصيرة، كل واحد بيعلّم المساعد يعمل شغلانة واحدة كويس مع Sorted، زي بداية الشغل مع الشركة، أو مراجعة أداء الشركة، أو قائمة التحصيل، أو الأرقام اللي مش متطابقة، أو توصيل نظام، أو بناء صفحة أرقام.
 - **إضافة Codex** و**إضافة Claude Code**، وكل واحدة بتنزّل الـ skills دي مع الاتصال بـ Sorted.
 - **دليل لـ ChatGPT**، لأنه بيتوصل بـ Sorted مباشرة.
 
@@ -32,7 +32,7 @@ FOR NATIVE REVIEW: this Arabic text was written by an assistant and has not been
 - يساعد صاحب الشركة يوصّل Odoo أو Shopify أو Google Ads أو Google Analytics، علشان Sorted يقراهم بنفسه.
 - **أرقام من أنظمة مش بيقراها Sorted بنفسه** (إعلانات Meta، نظام الكاشير، تطبيق التوصيل) المساعد الذكي بتاع صاحب الشركة يقدر يبعتها لـ Sorted من خلال "feed". الـ feed مفتوح لكل الشركات. المساعد بيقترح الـ feed، وصاحب الشركة بيشوف المعاينة ويقول آه، والشاشة بتكتب إن الأرقام دي "اتبعتت من المساعد" لأن Sorted مش بيقدر يراجعها. النهارده Sorted بيقرا Odoo و Shopify و Google Ads و Google Analytics بنفسه.
 
-الملاحظات التقنية: [docs/feed-tools.md](../feed-tools.md) (بالإنجليزي). قايمة الـ 19 skill وكل واحدة بتعمل إيه: في [الصفحة الإنجليزي](../../README.md#the-19-skills).
+الملاحظات التقنية: [docs/feed-tools.md](../feed-tools.md) (بالإنجليزي). قايمة الـ 20 skill وكل واحدة بتعمل إيه: في [الصفحة الإنجليزي](../../README.md#the-20-skills).
 
 ## التركيب: Codex
 
@@ -130,9 +130,9 @@ FOR NATIVE REVIEW: this Arabic text was written by an assistant and has not been
 
 1. في Claude، افتح **Customize**، وبعدين **Connectors**، ودوس **+ Add**، وبعدين **Add custom connector**. سمّيه Sorted واكتب العنوان `https://sortedos.com/api/mcp`، ودوس **Continue**، وسيب اختيارات الدخول زي ما Claude بيقترحها ودوس **Add**. في باقة Team أو Enterprise، صاحب حساب Claude بتاع الشركة بيضيفه الأول من **Organization settings** ثم **Connectors**، وبعدين كل عضو يلاقيه في **Customize** ثم **Connectors** ويدوس **Connect**. صفحة Anthropic بتوري كل شاشة: https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp
 2. سجّل دخول بحساب Sorted بتاعك لما Claude يطلب، واختار شركتك ودوس **Allow**.
-3. علشان تستخدم skill، افتح الملف بتاعها من [قايمة الـ skills](../../README.md#the-19-skills)، وانسخ كل النص والزقه كأول رسالة.
+3. علشان تستخدم skill، افتح الملف بتاعها من [قايمة الـ skills](../../README.md#the-20-skills)، وانسخ كل النص والزقه كأول رسالة.
 
-أودو: توصيله مش محتاج أي تطبيق أو إضافة متصفح زيادة. المساعد بيعمل مفتاح أودو بنفسه لو معاه أداة متصفح (تطبيق Claude للديسكتوب مع Claude in Chrome؛ ومتوقع إن Cowork فيه واحدة، لسه ما اتجرّبش). من غيرها، إنت بتعمل المفتاح في أودو (قايمة الصورة؛ أودو 20: My Preferences، Security، Create API Key، و Scope اختار RPC؛ أودو 19: نفس القايمة بس الزرار اسمه Add API Key؛ أودو 17/18: My Profile، Account Security، New API Key) وتلزقه في الشات، أو تملأ فورم أودو في صفحة Connections بتاعة Sorted؛ والمساعد بيقولك الخطوات.
+أودو: توصيله مش محتاج أي تطبيق أو إضافة متصفح زيادة. المساعد بيعمل مفتاح أودو بنفسه لو معاه متصفح خاص بيه (في تطبيق Claude اسمه Cowork، وفي ChatGPT وضع Work؛ لسه ما اتجرّبش). عمره ما بيستخدم متصفح Chrome بتاعك، ولو إنت على Claude في المتصفح بيقولك كده ويعرض عليك تطبيق Claude للديسكتوب. من غير متصفح، إنت بتعمل المفتاح في أودو (قايمة الصورة؛ أودو 20: My Preferences، Security، Create API Key، و Scope اختار RPC؛ أودو 19: نفس القايمة بس الزرار اسمه Add API Key؛ أودو 17/18: My Profile، Account Security، New API Key) وتلزقه في الشات، أو تملأ فورم أودو في صفحة Connections بتاعة Sorted؛ والمساعد بيقولك الخطوات.
 
 اتجرّب يوم 19 أكتوبر 2026 (claude.ai في المتصفح، وCustomize فيه نفس اللي في تطبيق Claude للديسكتوب؛ باقة Claude Max): الطريقة أ، الخطوات من 1 لـ 6 فوق، خدت حوالي 16 دقيقة أول مرة، بما فيها فهم الأربع شاشات اللي الخطوات القديمة ما كانتش بتقولها (ملاحظة "ready to use" وSorted لسه مش متوصّل، ونافذة Add custom connector، ودوسة Connect مرتين، وملاحظة GitHub). الطريقة ب بتفتح نفس نافذة Add custom connector بتاعة الخطوة 5، فالتجربة دي بتغطيها عمليًا؛ ما اتشغّلتش لوحدها. ما اتجرّبش: باقة Team أو Enterprise، وتطبيق Claude للديسكتوب نفسه، وCowork. Anthropic بتغيّر القوايم دي كتير: لو شاشة مختلفة، اتبع صفحة Anthropic.
 

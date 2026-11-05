@@ -9,7 +9,7 @@ Answer in the language the person writes in, even when tools answer in English. 
 
 No Sorted tools in this chat? Sorted is not connected yet: follow `sorted-not-connected`.
 
-1. Call `get_overview`. Note the snapshot time and every section that is not reporting.
+1. Call `get_overview`. Note the snapshot time and every section that is not reporting. For a period ("October", "last year", "1 to 15 October") send `from` and `to` (YYYY-MM-DD) to `get_overview` and `get_section`: whole months of the last 24 months and any range inside the last 30 days work. A balance says "As of now"; what is listed under `cannot_recalculate` is never estimated.
 2. Call `list_conflicts`.
 3. For the one or two sections that matter most to the question, call `get_section` for detail.
 4. Write the review for a business owner, not an accountant:
