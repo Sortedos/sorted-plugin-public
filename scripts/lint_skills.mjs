@@ -135,7 +135,7 @@ const VENDORS = /\b(?:claude|chatgpt|gpt(?:-\d)?|openai|anthropic|codex|gemini|c
 // the vendors' own names for those modes say it (ChatGPT's Work mode has its own cloud computer; Claude in Chrome and Cowork are Claude's). The
 // exact parenthesis is allowed, nothing around it: any other vendor name, or this one worded differently, is still caught.
 const MODE_NAMES = "(ChatGPT: Work mode; Claude: Cowork)";
-// The THIRD approved exception (3 November 2026, Hassan; issue Sortedos/sorted-code#577): the assistant must use ITS OWN browser and never the owner's Chrome, and only the vendors' own names
+// The THIRD approved exception (3 November 2026, the product owner; issue Sortedos/sorted-code#577): the assistant must use ITS OWN browser and never the owner's Chrome, and only the vendors' own names
 // for that browser say it. This one bullet of sorted-onboard is allowed word for word (check below that it is there); any other vendor name, or this line worded differently, is still caught.
 const OWN_BROWSER_LINE = "**Your own browser, never the owner's Chrome.** Claude: the Claude app's browser (Cowork); ChatGPT: Work mode. Never use or list the owner's Chrome browsers or ask which one. Not available here (Claude on the web)? Say so in one line, offer the Claude desktop app, then use the Connections link.";
 // The SECOND approved exception (19 October 2026, live test, issue 231): when Sorted's tools are not available the owner must be told exactly which buttons connect Sorted, and the
@@ -171,13 +171,20 @@ const FEED_TOOLS = ["define_feed", "feed_numbers", "list_feeds", "end_feed"];
 const CONNECT_TOOLS = ["connect_odoo"]; // saves an Odoo connection after the owner's yes (Sorted still only reads from that Odoo); live since 11 October 2026
 // Sales vs Target (card #456, 1 November 2026): reading datasets, the owner's targets as versioned reference tables, and the sales mapping setting (owner only, preview then confirm).
 const SALES_TOOLS = ["get_dataset", "load_reference_table", "read_reference_table", "preview_sales_mapping", "set_sales_mapping", "get_sales_mapping"];
-const KNOWN_TOOLS = new Set([...READ_TOOLS, ...FEED_TOOLS, ...CONNECT_TOOLS, ...SALES_TOOLS]);
+// The owner's own tables (define_dataset and its helpers, owner only, preview then confirm), the page builder (panels and a page's filter bar) and the ready-made dashboards (5 November 2026, plugin audit:
+// these tools were live in the product but no skill could name them, because this list did not know them).
+const DATASET_TOOLS = ["describe_odoo_model", "define_dataset", "list_datasets", "remove_dataset", "share_dataset"];
+const PAGE_TOOLS = ["get_dashboard_panels", "preview_dashboard_panel", "set_dashboard_panel", "remove_dashboard_panel", "set_page_filters"];
+const TEMPLATE_TOOLS = ["list_dashboard_templates", "preview_dashboard_template", "apply_dashboard_template"];
+const KNOWN_TOOLS = new Set([...READ_TOOLS, ...FEED_TOOLS, ...CONNECT_TOOLS, ...SALES_TOOLS, ...DATASET_TOOLS, ...PAGE_TOOLS, ...TEMPLATE_TOOLS]);
 // Words in backticks that look like tool names but are fields, units or skill names, not tools.
 const NOT_TOOLS = new Set(["confirm_token", "fresh_hours", "daily_cap", "as_of", "billing_required", "billing_note", "pay_here",
   "read_orders", "read_products", "read_reports", "ads_read", "read_insights", "available_numbers",
   // fields of a number's definition, a field of a tool's answer, a change name and a period (sorted-add-any-number)
   "will_read", "group_by", "next_cursor", "no_change", "year_overrides", "product_name", "currency", "strip_leading_code", "strip_brackets", "drop_tokens", "created_date", "create_date", "order_date", "till_date", "channel_field", "exclude_teams", "category_aliases", "discount_lines", "channels_without_target", "store_areas", "store_channel", "category_groups", "adjustment_categories", "month_rule", "date_fields", "till_lines", "variant_suffixes",
-  "sales_channel", "sales_store", "sales_store_category", "sales_channel_category", "sales_channel_product", "sales_excluded", "shop_funnel", "shop_funnel_source", "ads_meta", "target_total", "target_channel", "target_store", "target_channel_category", "date_field", "currency_field", "this_month", "all_time", "add_number", "add_to_page", "tables_and_charts"]);
+  "sales_channel", "sales_store", "sales_store_category", "sales_channel_category", "sales_channel_product", "sales_excluded", "shop_funnel", "shop_funnel_source", "ads_meta", "target_total", "target_channel", "target_store", "target_channel_category", "date_field", "currency_field", "this_month", "all_time", "add_number", "add_to_page", "tables_and_charts",
+  // 5 November 2026: a field of a period answer, a template setting and three sales-mapping settings (the mapping's other settings are listed above)
+  "cannot_recalculate", "keep_my_pages", "odoo_db", "shopify_shop", "meta_accounts"]);
 // ======================================================================================================
 
 const SECRET_WORD = new RegExp(`\\b${SECRET_REF}\\b`, "i");
@@ -421,7 +428,7 @@ console.log(`ok - examples: the lint catches ${caught} of ${BAD.length} bad exam
 const EXPECTED = ["sorted-onboard", "sorted-about", "sorted-business-review", "sorted-cash-and-collections", "sorted-connect-systems", "sorted-fix-conflicts",
   "sorted-add-any-number", "sorted-organise-dashboard", "sorted-subscription", "sorted-connect-odoo", "sorted-connect-shopify", "sorted-connect-google-ads",
   "sorted-connect-google-analytics", "sorted-connect-meta-ads", "sorted-connect-any-system",
-  "sorted-not-connected", "sorted-daily-brief", "sorted-sales-vs-target-setup", "sorted-sales-vs-target-build"];
+  "sorted-not-connected", "sorted-daily-brief", "sorted-sales-vs-target-setup", "sorted-sales-vs-target-build", "sorted-build-pages"];
 const FEED_SKILLS = new Set(["sorted-connect-odoo", "sorted-connect-shopify", "sorted-connect-google-ads", "sorted-connect-google-analytics",
   "sorted-connect-meta-ads", "sorted-connect-any-system"]);
 // What every feed skill must say (matrix item 4): what to ask the owner, read-only access first, exact steps for a read-only
@@ -464,6 +471,21 @@ const ADD_ANY_NUMBER_RULES = [
   ["names request_new_number for a system that is not Odoo", /`request_new_number`[^.]*only for: a system that is not Odoo/],
 ];
 
+// 5 November 2026 (plugin audit): the owner's own tables (define_dataset) and the page builder (set_dashboard_panel) exist in the product, so a skill teaches them. It must keep: who may define a table,
+// the two-step save with the yes, no number typed into a panel, the wait until a table has been read, and the page limit.
+const BUILD_PAGES_RULES = [
+  ["says defining, sharing or removing a table is owner only", /Defining, sharing or removing a table is \*\*owner only\*\*/],
+  ["makes every save two steps: a preview, the person's yes, then only the confirm_token", /Every save is two steps[\s\S]*Never save without the yes/],
+  ["calls `define_dataset`, asks \"Shall I save this?\" and only then confirms with only the confirm_token", /`define_dataset`[\s\S]*Shall I save this\?[\s\S]*only the `confirm_token`/],
+  ["never types a number into a panel", /never type a number into one/],
+  ["says a table is there only when `list_datasets` shows it was read", /only when `list_datasets` shows it was read/],
+  ["names the 12-page limit", /at most 12 pages/],
+];
+// 5 November 2026 (plugin audit): the sales mapping REQUIRES `companies` (the Odoo company ids whose sales count); a mapping without it is refused.
+const SALES_SETUP_RULES = [
+  ["names `companies` as required in the mapping", /`companies` \[ids\] \(required/],
+];
+
 // 19 October 2026 (live tests, issues 231 and 233). When Sorted is not connected in a chat, an assistant said "Sorted not found" and recommended other products, and the owner's
 // own example "Give me my morning brief" went to another skill because no Sorted skill claimed it. sorted-not-connected says plainly that Sorted is not connected yet and gives the exact
 // steps (CONNECT_STEPS, word for word); sorted-daily-brief claims the morning / daily brief; every skill that needs Sorted's tools points to sorted-not-connected.
@@ -486,13 +508,13 @@ const DAILY_BRIEF_RULES = [
 const DAILY_BRIEF_PHRASES = [/morning brief/i, /daily brief/i, /what changed since yesterday/i];
 // Every skill that needs Sorted's tools starts by pointing to sorted-not-connected (the feed skills are at the word limit and are only reached after sorted-onboard).
 const NOT_CONNECTED_POINTER_SKILLS = new Set(["sorted-onboard", "sorted-connect-systems", "sorted-business-review", "sorted-cash-and-collections", "sorted-fix-conflicts",
-  "sorted-organise-dashboard", "sorted-subscription", "sorted-add-any-number", "sorted-daily-brief", "sorted-sales-vs-target-setup", "sorted-sales-vs-target-build"]);
+  "sorted-organise-dashboard", "sorted-subscription", "sorted-add-any-number", "sorted-daily-brief", "sorted-sales-vs-target-setup", "sorted-sales-vs-target-build", "sorted-build-pages"]);
 
 // What the entry-point skill must keep (the discovery-first flow): the one first question, a look at what Sorted already has, one plan
 // with the three columns, and the plain statement that only Odoo, Shopify, Google Ads and Google Analytics 4 can be added today
 // (11 October 2026: feeds are off, so the seven routes are gone from the plan).
 const ONBOARD_RULES = [
-  // 3 November 2026 (Hassan, #577): the assistant's own browser, never the owner's Chrome, and never the question "which Chrome".
+  // 3 November 2026 (the product owner, #577): the assistant's own browser, never the owner's Chrome, and never the question "which Chrome".
   ["says to use its own browser, never the owner's Chrome, and never to ask which one", { test: (t) => t.split(/\r?\n/).includes("- " + OWN_BROWSER_LINE) }],
   // 29 October 2026: browser first in onboarding too.
   ["say browser first: the assistant makes the key and never tells the owner to get one", /\*\*Browser first; you make the key\.\*\*[^\n]*Never tell the owner to get, find or make an API key\./],
@@ -520,7 +542,7 @@ const SIGN_IN_RULES = [
   ["gives one link for the owner's company, opened in the assistant's own browser where the owner signs in to Sorted", /the owner signs in to Sorted there\): https:\/\/sortedos\.com\/connections\?org=<company id>&provider=<google_ads\|ga4\|shopify>/],
   ["stops at Google's unverified app screen and lets the owner continue only on the owner's yes", /"unverified app" screen: stop and tell the owner what it says; only on the owner's yes do you press Advanced/],
   // 29 October 2026: browser first. The assistant opens the company's link itself, in the owner's own browser, and checks the page shows the owner's email and the company's name; only then, or with no browser tool, does the owner open the link.
-  // 3 November 2026 (Hassan, #577): the assistant's OWN browser, never the owner's Chrome; the owner still types the Sorted sign-in there.
+  // 3 November 2026 (the product owner, #577): the assistant's OWN browser, never the owner's Chrome; the owner still types the Sorted sign-in there.
   ["opens the company's link itself in its own browser (never the owner's Chrome), checks the owner's email and company name, and otherwise gives the owner the link", /Open this link yourself, in your own browser \(never the owner's Chrome[\s\S]*must show the owner's email and the company's name; if not, give the owner the link to open/],
   ["reads the database name and login from the signed-in page's session info and never opens a hosting dashboard", /session info[\s\S]*"db" and "username"[\s\S]*Never open Odoo\.sh, GitHub or a hosting dashboard/],
   ["says same-named cost tags are all included and each line counts once", /tags that share a name are all included and each line counts once/],
@@ -613,7 +635,7 @@ for (const d of dirs) {
     if (!desc || desc[1].trim().length < 40) problems.push("frontmatter has no real description (40 characters at least)");
   }
   const words = (text.match(/\S+/g) || []).length;
-  if (words > 1500) problems.push(`over 1,500 words: ${words}`); // 1,450 until 3 Nov 2026: raised by Hassan's ruling for the own-browser rule (#577)
+  if (words > 1500) problems.push(`over 1,500 words: ${words}`); // 1,450 until 3 Nov 2026: raised by the product owner's ruling for the own-browser rule (#577)
   problems.push(...lint(text));
   if (FEED_SKILLS.has(d)) {
     for (const tool of FEED_TOOLS) if (!text.includes(`\`${tool}\``)) problems.push(`does not name the tool ${tool}`);
@@ -625,6 +647,8 @@ for (const d of dirs) {
   if (d === "sorted-connect-odoo") for (const [why, re] of ODOO_FEED_RULES) if (!re.test(text)) problems.push(`does not say it ${why}`);
   if (d === "sorted-connect-any-system") for (const [why, re] of ANY_SYSTEM_RULES) if (!re.test(text)) problems.push(`does not say it ${why}`);
   if (d === "sorted-add-any-number") for (const [why, re] of ADD_ANY_NUMBER_RULES) if (!re.test(text)) problems.push(`does not say it ${why}`);
+  if (d === "sorted-build-pages") for (const [why, re] of BUILD_PAGES_RULES) if (!re.test(text)) problems.push(`does not say it ${why}`);
+  if (d === "sorted-sales-vs-target-setup") for (const [why, re] of SALES_SETUP_RULES) if (!re.test(text)) problems.push(`does not say it ${why}`);
   if (d === "sorted-onboard") for (const [why, re] of ONBOARD_RULES) if (!re.test(text)) problems.push(`does not ${why}`);
   if (SECURITY_SKILLS.has(d)) for (const [why, re] of SECURITY_RULES) if (!re.test(text)) problems.push(`does not say it ${why}`);
   if (KEY_BOX_SKILLS.has(d)) for (const [why, re] of KEY_BOX_RULES) if (!re.test(text)) problems.push(`does not say it ${why}`);

@@ -4,7 +4,7 @@
 
 This repository lets an AI assistant work with Sorted. It holds:
 
-- **19 skills**: short instruction files that teach an assistant how to do one job well with Sorted, such as getting a company started, a business review, a collections list, finding numbers that disagree, or connecting a system.
+- **20 skills**: short instruction files that teach an assistant how to do one job well with Sorted, such as getting a company started, a business review, a collections list, finding numbers that disagree, connecting a system, or building a page of numbers.
 - **The Codex plugin** (advanced, support only, with a personal key) and **the Claude Code plugin**, which install those skills together with the connection to Sorted.
 - **A guide for ChatGPT**, which connects to Sorted directly.
 
@@ -27,10 +27,11 @@ Pick the path for the assistant you use. A terminal is the text window where you
 - Answer "how is the business doing?" from live numbers, with the time of each snapshot.
 - List who owes the company money and draft polite reminders.
 - Find where two systems disagree (for example the books and the bank) and list the exact records behind the gap.
+- **Build pages and tables by talking.** The owner has the assistant define a table of their own Odoo numbers by month (purchases by supplier, sales by product, with averages and running totals); anyone then puts numbers, tables, charts and notes on their own pages, with a period and filters. Each save is previewed and needs a yes. The skill is `sorted-build-pages`.
 - Help the owner connect Odoo, Shopify, Google Ads or Google Analytics, so that Sorted reads them itself.
 - **Numbers from systems Sorted does not read itself** (Meta ads, a point-of-sale system, a delivery app) can be sent in by the owner's own assistant through a "feed". Feeds are open to every company. The assistant proposes the feed, the owner sees a preview and says yes, and the dashboard labels those numbers as sent by the assistant, because Sorted cannot check them. Today Sorted reads Odoo, Shopify, Google Ads and Google Analytics itself. The technical notes are in [docs/feed-tools.md](docs/feed-tools.md).
 
-## The 19 skills
+## The 20 skills
 
 Each skill is one instruction file. The plugins install all of them; in an assistant without the plugin, open the file, copy all of its text and paste it as your first message.
 
@@ -41,7 +42,8 @@ Each skill is one instruction file. The plugins install all of them; in an assis
 | [sorted-business-review](skills/sorted-business-review/SKILL.md) | A business review from the live numbers: sales, cash, who owes whom, what disagrees |
 | [sorted-cash-and-collections](skills/sorted-cash-and-collections/SKILL.md) | Cash, who owes the business money, what is overdue, polite reminder drafts |
 | [sorted-fix-conflicts](skills/sorted-fix-conflicts/SKILL.md) | Where two systems report different numbers, and the exact records behind the gap |
-| [sorted-organise-dashboard](skills/sorted-organise-dashboard/SKILL.md) | Hide, show, move or add cards and pages on the dashboard |
+| [sorted-organise-dashboard](skills/sorted-organise-dashboard/SKILL.md) | Hide, show, move or add cards and pages on the dashboard, or start from a ready-made dashboard |
+| [sorted-build-pages](skills/sorted-build-pages/SKILL.md) | Build a page of numbers by talking: a table of the owner's Odoo numbers by month, then numbers, tables, charts and notes on a page, with a period and filters |
 | [sorted-sales-vs-target-setup](skills/sorted-sales-vs-target-setup/SKILL.md) | Load the owner's targets sheet and the sales mapping into Sorted (owner only, each save previewed and confirmed) |
 | [sorted-sales-vs-target-build](skills/sorted-sales-vs-target-build/SKILL.md) | Build the Sales vs Target dashboard as one interactive page from Sorted's data only |
 | [sorted-add-any-number](skills/sorted-add-any-number/SKILL.md) | Add any number, list or breakdown from the owner's Odoo to Sorted (sales or stock by product, late deliveries, open quotes), up to 12 months back |
@@ -58,7 +60,7 @@ Each skill is one instruction file. The plugins install all of them; in an assis
 
 ## Install one fixed version
 
-**Releases exist** (checked 21 October 2026: v1.3.6 up to v1.3.12). Each one is listed with its notes at https://github.com/Sortedos/sorted-plugin-public/releases, and the newest is marked Latest: that is the one to install. The commands in the install sections that follow install whatever the main branch of this repository holds at that moment; the commands below pin one release instead.
+**Releases exist** (checked 5 November 2026: v1.3.6 up to v1.3.19; later versions are on the main branch until the next release is cut). Each one is listed with its notes at https://github.com/Sortedos/sorted-plugin-public/releases, and the newest is marked Latest: that is the one to install. The commands in the install sections that follow install whatever the main branch of this repository holds at that moment; the commands below pin one release instead.
 
 A tagged release is a fixed version: it does not change after it is published, so it is the safer choice for a company. A release is named `v<version>`, for example `v1.3.12`. Use the version number marked Latest on the releases page. One exception to read: `v1.3.11` was cut one commit early (its manifest files still say 1.3.10) and, because tags are never moved, it stays as it is; use `v1.3.12` or later.
 
@@ -115,9 +117,9 @@ On a Team or Enterprise plan, a Claude owner can limit which marketplaces are al
 1. In Claude, open **Customize**, then **Connectors**, click **+ Add**, then **Add custom connector**. Name it Sorted, enter the address `https://sortedos.com/api/mcp`, press **Continue**, keep the sign-in choices Claude suggests and press **Add**. On a Team or Enterprise plan, an owner of the Claude organisation adds it first under **Organization settings**, **Connectors**; members then find it under **Customize**, **Connectors** and click **Connect**. Anthropic's page shows each screen: https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp
 2. Sign in with your Sorted account when Claude asks, choose your company and press **Allow**.
 3. Optional: in **Customize**, **Connectors**, **Sorted**, set **Read-only tools** to **Always allow**, so Claude does not ask before each read. Changes to your dashboard still ask first.
-4. To use a skill, open its file from [the list of skills](#the-19-skills), copy all of its text and paste it as your first message.
+4. To use a skill, open its file from [the list of skills](#the-20-skills), copy all of its text and paste it as your first message.
 
-Odoo: connecting it needs no extra app or browser extension. The assistant can make the Odoo key itself when it has a browser tool (the Claude desktop app with Claude in Chrome; Cowork is expected to have one, not tested). Without one, you make the key in Odoo (avatar menu; Odoo 20: My Preferences, Security tab, Create API Key, Scope RPC; Odoo 19: the same menu, Add API Key; Odoo 17/18: My Profile, Account Security, New API Key) and paste it in the chat, or fill in the Odoo form on Sorted's Connections page; the assistant tells you the steps.
+Odoo: connecting it needs no extra app or browser extension. The assistant can make the Odoo key itself when it has its own browser (in the Claude app, Cowork; in ChatGPT, Work mode; not tested). It never uses your own Chrome, and on Claude on the web it says so and offers the Claude desktop app. Without a browser, you make the key in Odoo (avatar menu; Odoo 20: My Preferences, Security tab, Create API Key, Scope RPC; Odoo 19: the same menu, Add API Key; Odoo 17/18: My Profile, Account Security, New API Key) and paste it in the chat, or fill in the Odoo form on Sorted's Connections page; the assistant tells you the steps.
 
 Tested on 19 October 2026 (claude.ai in the browser, where Customize is the same as in the Claude desktop app; Claude Max plan): Route A, steps 1 to 6 above, took about 16 minutes the first time, including working out the four screens that older steps did not mention (the "ready to use" note while Sorted is not connected, the Add custom connector window, pressing Connect twice, and the GitHub note). Route B opens the same Add custom connector window as step 5, so that run covers it in practice; it was not run on its own. Not tested: a Team or Enterprise plan, the Claude desktop app itself, Cowork. Anthropic changes these menus often: if a screen differs, follow Anthropic's page.
 

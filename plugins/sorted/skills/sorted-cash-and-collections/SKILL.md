@@ -9,7 +9,7 @@ Answer in the language the person writes in, even when tools answer in English. 
 
 No Sorted tools in this chat? Sorted is not connected yet: follow `sorted-not-connected`.
 
-1. Call `get_overview` for the headline cash, receivable and payable numbers.
+1. Call `get_overview` for the headline cash, receivable and payable numbers. For a period, send `from` and `to` (YYYY-MM-DD); a balance still says "As of now", never for that period.
 2. Call `get_section` with the company's books (e.g. query "books") and read the customer and supplier tables.
 3. Answer:
    - **Cash today** - book cash and money in limbo, with the snapshot time.

@@ -1,8 +1,21 @@
 # Changelog
 
+## 1.3.25
+
+1.3.25: the skills match what the live product can do (an audit on 5 November 2026 compared every skill with the tools the connection offers today). One new skill (20 skills), six skills corrected or extended, no connection change.
+
+- **New: `sorted-build-pages`.** Building pages and tables by talking, which no skill covered: the owner defines a table of their own Odoo numbers by month (`describe_odoo_model`, `define_dataset`, `list_datasets`, `share_dataset`, `remove_dataset`), then anyone puts numbers, tables, charts and notes on their own pages (`get_dashboard_panels`, `preview_dashboard_panel`, `set_dashboard_panel`, `remove_dashboard_panel`) with a period and filters (`set_page_filters`). Every save is a preview, the person's yes, then the confirm code.
+- **`sorted-sales-vs-target-setup` was missing a required setting.** The sales mapping must name `companies` (the Odoo company ids whose sales count); without it Sorted refuses the mapping. It also names `odoo_db`, `shopify_shop` and `meta_accounts`, which a company with several Odoo connections, stores or ad accounts must set.
+- **`sorted-add-any-number`** knows a fixed start date (`from`, `to`) and grouping a date by month (`date_order:month`), and sends a table by month, an average, a ratio or a chart to `sorted-build-pages` instead of to the Sorted team.
+- **`sorted-organise-dashboard`** counts the person's pages before planning (at most 12, found in a trial on 3 November) and now covers ready-made dashboards (list, preview, apply, and that applying replaces their pages unless they are kept). Ticket: https://github.com/Sortedos/sorted-code/issues/580
+- **`sorted-business-review` and `sorted-cash-and-collections`** ask for a period with `from` and `to`, as the connection supports (whole months of the last 24 months, any range inside the last 30 days; a balance says "As of now").
+- **`sorted-about`** points a table, chart or page to the skills that build it, and has the assistant give the owner the request number.
+- **README and Arabic README:** the Odoo browser sentence no longer names Claude in Chrome (1.3.24 made the assistant use its own browser), the release note names the newest release, and the skill count is 20.
+- **Lint:** it knows the dataset, page-builder and template tools (they were live in the product but no skill could name them), and requires the rules above.
+
 ## 1.3.24
 
-1.3.24: `sorted-onboard` and `sorted-connect-systems` make Claude use its own browser (the Claude app's browser, Cowork) and never the owner's Chrome. Before, Claude on the web went to the owner's Chrome and asked which of four Chrome browsers to use. Now it never asks that; if its own browser is not available in the chat it says so, offers the Claude desktop app, and gives the Connections link. The owner still signs in to Sorted and to each system themselves. No new skills (19 skills). Lint (`scripts/lint_skills.mjs`): the word cap per skill goes from 1,450 to 1,500 (Hassan, 3 Nov 2026); the own-browser bullet is a third approved vendor-name exception, required word for word in `sorted-onboard`; the connection-link rules now require the own-browser wording. Ticket: https://github.com/Sortedos/sorted-code/issues/577
+1.3.24: `sorted-onboard` and `sorted-connect-systems` make Claude use its own browser (the Claude app's browser, Cowork) and never the owner's Chrome. Before, Claude on the web went to the owner's Chrome and asked which of four Chrome browsers to use. Now it never asks that; if its own browser is not available in the chat it says so, offers the Claude desktop app, and gives the Connections link. The owner still signs in to Sorted and to each system themselves. No new skills (19 skills). Lint (`scripts/lint_skills.mjs`): the word cap per skill goes from 1,450 to 1,500 (the product owner, 3 Nov 2026); the own-browser bullet is a third approved vendor-name exception, required word for word in `sorted-onboard`; the connection-link rules now require the own-browser wording. Ticket: https://github.com/Sortedos/sorted-code/issues/577
 
 ## 1.3.23
 
