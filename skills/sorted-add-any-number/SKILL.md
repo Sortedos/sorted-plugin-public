@@ -1,6 +1,6 @@
 ---
 name: sorted-add-any-number
-description: Defines a new number, list or breakdown from the owner's Odoo in Sorted, such as sales or stock by product. Use when the owner wants a number, list or period that is not in the catalogue (available_numbers), for example sales or stock by product, late deliveries, open quotes or purchase orders, anything in Odoo, over up to 12 months, or from a fixed date. Not for a system that is not Odoo, which is request_new_number, and not for a table by month, an average, a ratio or a chart, which is sorted-build-pages.
+description: Defines a new number, list or breakdown from the owner's Odoo in Sorted, such as sales by product or service, stock on hand, or hours by project. Use when the owner wants a number, list or period that is not in the catalogue (available_numbers), for example sales or stock by product, revenue or hours by project, late deliveries, open quotes or purchase orders, anything in Odoo, over up to 12 months, or from a fixed date. Not for a system that is not Odoo, which is request_new_number, and not for a table by month, an average, a ratio or a chart, which is sorted-build-pages.
 ---
 
 # Add any number from the owner's Odoo

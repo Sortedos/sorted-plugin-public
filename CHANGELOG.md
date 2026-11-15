@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.26
+
+1.3.26: the skills read for any kind of business, not only one that sells products. `sorted-add-any-number`, `sorted-build-pages` and `sorted-organise-dashboard` broaden their lead examples and trigger wording from "sales or stock by product" to also name services and projects (sales by product or service, revenue or hours by project), so a services firm, an agency or a project business sees itself in the guidance. Generalising wording only: no new or removed skills (20 skills), no connection change, and no change to any step, tool, rule or worked example. Ticket: https://github.com/Sortedos/sorted-code/issues/728
+
 ## 1.3.25
 
 1.3.25: the skills match what the live product can do (an audit on 5 November 2026 compared every skill with the tools the connection offers today). One new skill (20 skills), six skills corrected or extended, no connection change.
