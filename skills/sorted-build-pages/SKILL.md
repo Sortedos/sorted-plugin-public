@@ -1,6 +1,6 @@
 ---
 name: sorted-build-pages
-description: "Builds pages and tables of numbers in Sorted by talking: a table of the owner's Odoo numbers by month (purchases by supplier, sales by product, with averages, ratios and running totals), then numbers, tables, charts and notes on the person's own pages, with a period and filters. Use when anyone asks for a page, chart, table or report that Sorted does not have yet, for example 'a page for purchases by supplier', 'build me a sales dashboard', 'show it as a chart', including Egyptian Arabic such as 'ابنيلي صفحة' or 'عايز جدول'. Not for hiding or moving cards (sorted-organise-dashboard) and not for one single number (sorted-add-any-number)."
+description: "Builds pages and tables of numbers in Sorted by talking: a table of the owner's Odoo numbers by month (purchases by supplier, sales by product or service, revenue by project, with averages, ratios and running totals), then numbers, tables, charts and notes on the person's own pages, with a period and filters. Use when anyone asks for a page, chart, table or report that Sorted does not have yet, for example 'a page for purchases by supplier', 'build me a sales dashboard', 'revenue by service', 'show it as a chart', including Egyptian Arabic such as 'ابنيلي صفحة' or 'عايز جدول'. Not for hiding or moving cards (sorted-organise-dashboard) and not for one single number (sorted-add-any-number)."
 ---
 
 # Build pages and tables by talking
